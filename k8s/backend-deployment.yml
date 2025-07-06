@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finch-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: finch-backend
+  template:
+    metadata:
+      labels:
+        app: finch-backend
+    spec:
+      container:
+        - name: backend
+          image: badhonparvej481/finch-backend:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DB_HOST
+              value: "postgresql"
+            - name: REDIS_HOST
+              value: "redis"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
